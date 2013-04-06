@@ -11,17 +11,11 @@ function initialize() {
   return map;
 }
 
-function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    addHeatmap(results);
-  }
-}
-
 function addHeatmap(results) {
   var heatmapData = [];
   for (var i = 0; i < results.length; i++) {
-    var coords = results[i].geometry.location;
-    var latLng = new google.maps.LatLng(coords.jb, coords.kb);
+    var shop = results[i];
+    var latLng = new google.maps.LatLng(shop.latitude, shop.longitude);
     heatmapData.push(latLng);
   }
   var heatmap = new google.maps.visualization.HeatmapLayer({
@@ -32,15 +26,10 @@ function addHeatmap(results) {
 }
 
 function populateMap(map) {
-  var request = {
-    location: london,
-    radius: '10000',
-    types: ['store'],
-    keyword: 'chicken'
-  };
-
-  service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, callback);
+  $.getJSON('/shops.json', null, function(data, textStatus, jqXHR) {
+    $('#shop-count').html('Showing ' + data.length + ' shops');
+    addHeatmap(data);
+  });
 }
 
 

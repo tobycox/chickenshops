@@ -1,5 +1,6 @@
+require 'rubygems'
 require 'sinatra/base'
-require 'google/api_client'
+require 'mongoid'
 require_relative 'models/init'
 require_relative 'routes/init'
 
@@ -11,7 +12,7 @@ class ChickenApp < Sinatra::Base
 
   configure do
     set :app_file, __FILE__
-    
+    Mongoid.load!("config/mongoid.yml")
   end
 
   configure :development do
