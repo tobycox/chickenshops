@@ -1,19 +1,24 @@
 require 'rubygems'
 require 'sinatra/base'
+require 'sinatra/config_file'
 require 'mongoid'
 require_relative 'models/init'
 require_relative 'routes/init'
 
 class ChickenApp < Sinatra::Base
+  register Sinatra::ConfigFile
 
   enable :method_override
   enable :sessions
   set :session_secret, 'super secret'
 
+  config_file '../config/chicken.yml'
+
   configure do
     set :app_file, __FILE__
-    Mongoid.load!("config/mongoid.yml")
+    Mongoid.load! 'config/mongoid.yml'  
   end
+
 
   configure :development do
     enable :logging, :dump_errors, :raise_errors

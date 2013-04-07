@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
-gem 'sinatra'
+gem 'sinatra', '~> 1.3.0'
+gem 'sinatra-contrib'
 gem 'google_places', :git => 'git@github.com:halfbrick/google_places.git'
 gem 'bson_ext'
 gem 'mongoid'
